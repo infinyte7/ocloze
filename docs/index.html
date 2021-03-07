@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--
+Author: Infinyte7 (Mani)
+-->
+<html>
+
+<head>
+  <link rel="manifest" href="manifest.json">
+
+  <meta name="apple-mobile-web-app-title" content="Ocloze">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#1565c0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="apple-touch-icon" href="images/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="152x152" href="images/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="167x167" href="images/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/icon-192.png" type="image/png">
+
+  <link rel="mask-icon" href="images/icon-192.png" color="#5bbad5">
+
+  <meta name="theme-color" content="#1565c0">
+  <meta name="msapplication-navbutton-color" content="#1565c0">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/index.js"></script>
+
+  <link href="css/index.css" rel=stylesheet type=text/css>
+
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- <script type="text/javascript">
+    window.languagePluginUrl = 'https://pyodide-cdn2.iodide.io/dev/full/';
+  </script>
+  <script src="https://pyodide-cdn2.iodide.io/dev/full/pyodide.js"></script> -->
+
+
+  <script type="text/javascript">
+    window.languagePluginUrl = 'pyodide/dev/full/';
+  </script>
+  <script src="pyodide/dev/full/pyodide.js"></script>
+
+  <title>
+    Ocloze - Cloze Over lapper in browser
+  </title>
+</head>
+
+<body>
+
+  <header>
+    <div style="width: -webkit-fill-available;">
+      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
+          class="material-icons">menu</i></div>
+      <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">OCloze</div>
+
+      <div id="done-export-all" class="toolbar-button" style="float: right; display: block;" onclick="exportAll();"><i
+          class="material-icons">get_app</i></div>
+
+      <div id="done-btn" class="toolbar-button" style="float: right;" onclick="addClozeToList();"><i
+          class="material-icons">add</i></div>
+
+      <div id="close-add-note-btn" class="toolbar-button" style="float: right; display: none;"
+        onclick="closeAddNoteNav()"><i class="material-icons">close</i></div>
+    </div>
+  </header>
+
+  <!-- main side nav -->
+  <div id="mainSideNav" class="sidenav-main" style="right: 0;">
+    <a class="closebtn" onclick="closeMainNav()">x</a>
+
+    <div class="sidenav-header">Ocloze</div>
+    <!-- https://getwaves.io/ -->
+    <!-- view svg in index.css -->
+
+    <div class="sidenav-version">
+      <div style="bottom: 20px; position: absolute; margin: auto; text-align: center;left: 10%;">Version 1.0.0</div>
+    </div>
+
+    <!-- github logo -->
+    <div style="position: absolute; bottom: 0px; right: 10px;">
+      <a href="https://github.com/infinyte7/ocloze">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" shape-rendering="geometricPrecision"
+          style="cursor: unset; border: unset" text-rendering="geometricPrecision" image-rendering="optimizeQuality"
+          fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 640 640" fill="white">
+          <path
+            d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z">
+          </path>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+  <!--main Side Nav -->
+
+  <!-- bottom -->
+  <nav class="nav">
+    <a id="drawBtn" href="#" class="nav__link" onclick="createCloze();">
+      <i id="drawBtnIcon" class="material-icons nav__icon" style="color: #009688;">flip</i>
+      <span class="nav__text">Add</span>
+    </a>
+    <a id="enableDrawBtn" href="#" class="nav__link" onclick="generateCloze();">
+      <i id="enabledrawBtnIcon" class="material-icons nav__icon" style="color: #009688;">dynamic_feed</i>
+      <span class="nav__text">Auto</span>
+    </a>
+    <a href="#" class="nav__link" onclick="clearNote();">
+      <i class="material-icons nav__icon" style="color: #f44336;">delete_forever</i>
+      <span class="nav__text">Clear</span>
+    </a>
+    <a href="#" class="nav__link" onclick="changeSettings();">
+      <i class="material-icons nav__icon" style="color: #5c6bc0;">settings</i>
+      <span class="nav__text">Settings</span>
+    </a>
+  </nav>
+
+
+  <div id="statusMsg" class="status-message">Wait for loading...</div>
+  <div id="snackbar"></div>
+  <div id="loading"></div>
+
+
+  <!-- Note Form -->
+  <!-- Original, Title, Remarks, Sources, Extra 1, Extra 2-->
+  <div id="add-note">
+    <div class="input-note" style="padding-top: 60px;">Original
+      <hr class="thin">
+      <textarea id="noteOriginal" class="input-add-note" type="text" placeholder="Original..." required></textarea>
+    </div>
+
+    <div class="input-note" style="padding-top: 30px;">Title
+      <hr class="thin">
+      <textarea id="noteTitle" class="input-add-note" type="text" placeholder="Title..." required></textarea>
+    </div>
+
+    <div class="input-note" style="padding-top: 30px;">Remarks
+      <hr class="thin">
+      <textarea id="noteRemarks" class="input-add-note" type="text" placeholder="Remarks..." required></textarea>
+    </div>
+
+    <div class="input-note" style="padding-top: 30px;">Sources
+      <hr class="thin">
+      <textarea id="noteSources" class="input-add-note" type="text" placeholder="Sources..." required></textarea>
+    </div>
+
+    <div class="input-note" style="padding-top: 30px;">Settings
+      <hr class="thin">
+      <textarea id="noteSettings" class="input-add-note" type="text" placeholder="Settings" required></textarea>
+    </div>
+  </div>
+  <!-- Note Form -->
+
+  <script>
+    var noteHTML = document.getElementById("add-note");
+
+    for (i = 1; i <= 20; i++) {
+
+      noteHTML.innerHTML += '<div class="input-note" style="padding-top: 30px;">Text '+ i +'\
+    <hr class="thin">\
+    <textarea id="noteText'+ i +'" class="input-add-note" type="text" placeholder="Text '+ i +'..." required></textarea>\
+</div>'
+
+    }
+
+    noteHTML.innerHTML += '<div class="input-note" style="padding-top: 30px;">Full\
+    <hr class="thin">\
+    <textarea id="fullText" class="input-add-note" type="text" placeholder="Full..." required></textarea>\
+</div>'
+  </script>
+
+  <br><br><br><br>
+
+  <!-- pyodide script anki deck export -->
+  <script src="js/deck-export.js"></script>
+</body>
+
+</html>
