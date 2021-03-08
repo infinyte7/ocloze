@@ -68,7 +68,7 @@ header {
   right: 0px;
   left: 0px;
   z-index: 9999;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
   background-color: var(--header-bg-color);
   color: var(--header-color);
   display: flex;
@@ -386,14 +386,14 @@ hr.thin {
   height: 0;
   width: 100%;
   position: fixed;
-  z-index: 20;
-  top: 0;
+  bottom: 0;
   right: 0;
   overflow-x: hidden;
   transition: 0.5s;
   text-align:center;
+  background-color: #f3f3f3;
   background: var(--side-nav-help-bg);
-  z-index: 999;
+  z-index: 9999;
 }
 .sidenav-help .closebtn {
   position: absolute;
@@ -529,6 +529,7 @@ tr:nth-child(odd) {
 }
 #loading {
   position: absolute;
+  z-index: 9;
   left: 43%;
   top: 40%;
   display: inline-block;
@@ -546,4 +547,30 @@ tr:nth-child(odd) {
 }
 @-webkit-keyframes spin {
   to { -webkit-transform: rotate(360deg); }
+}
+
+.pop-up {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 75%;
+  height: 0;
+  margin: auto;
+  background-color: #f3f3f3;
+  text-align: center;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.help-button {
+  float: right;
+  padding: 8px;
+  margin: 8px;
+  background: #4CA;
+  color: white;
+  font-size: 18px;
+  border-radius: 8px;
+  font-family: monospace;
 }

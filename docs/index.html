@@ -48,8 +48,6 @@ Author: Infinyte7 (Mani)
 
   <header>
     <div style="width: -webkit-fill-available;">
-      <div class="toolbar-button" style="float: left;" onclick="sideNavMain();"><i id="menu-icon"
-          class="material-icons">menu</i></div>
       <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">OCloze</div>
 
       <div id="done-export-all" class="toolbar-button" style="float: right; display: block;" onclick="exportAll();"><i
@@ -93,13 +91,13 @@ Author: Infinyte7 (Mani)
 
   <!-- bottom -->
   <nav class="nav">
-    <a id="drawBtn" href="#" class="nav__link" onclick="createCloze();">
-      <i id="drawBtnIcon" class="material-icons nav__icon" style="color: #009688;">flip</i>
+    <a href="#" class="nav__link" onclick="createCloze();">
+      <i class="material-icons nav__icon" style="color: #009688;">flip</i>
       <span class="nav__text">Add</span>
     </a>
-    <a id="enableDrawBtn" href="#" class="nav__link" onclick="generateCloze();">
-      <i id="enabledrawBtnIcon" class="material-icons nav__icon" style="color: #009688;">dynamic_feed</i>
-      <span class="nav__text">Auto</span>
+    <a href="#" class="nav__link" onclick="generateCloze();">
+      <i class="material-icons nav__icon" style="color: #009688;">all_inclusive</i>
+      <span class="nav__text">Generate</span>
     </a>
     <a href="#" class="nav__link" onclick="clearNote();">
       <i class="material-icons nav__icon" style="color: #f44336;">delete_forever</i>
@@ -118,7 +116,7 @@ Author: Infinyte7 (Mani)
 
 
   <!-- Note Form -->
-  <!-- Original, Title, Remarks, Sources, Extra 1, Extra 2-->
+  <!-- Original, Title, Remarks, Sources ...-->
   <div id="add-note">
     <div class="input-note" style="padding-top: 60px;">Original
       <hr class="thin">
@@ -152,9 +150,9 @@ Author: Infinyte7 (Mani)
 
     for (i = 1; i <= 20; i++) {
 
-      noteHTML.innerHTML += '<div class="input-note" style="padding-top: 30px;">Text '+ i +'\
+      noteHTML.innerHTML += '<div class="input-note" style="padding-top: 30px;">Text ' + i + '\
     <hr class="thin">\
-    <textarea id="noteText'+ i +'" class="input-add-note" type="text" placeholder="Text '+ i +'..." required></textarea>\
+    <textarea id="noteText'+ i + '" class="input-add-note" type="text" placeholder="Text ' + i + '..." required></textarea>\
 </div>'
 
     }
@@ -166,6 +164,203 @@ Author: Infinyte7 (Mani)
   </script>
 
   <br><br><br><br>
+
+  <div id="pyodide-load-status" class="pop-up" style="display: table; position: absolute; text-align: left; padding: 14px;">
+    <div id="close-settings-btn" class="toolbar-button" style="float: right;" onclick="closeConsole()">
+      <i class="material-icons">close</i>
+    </div>
+    <div><h2>Status</h2></div>
+    <div id="pyodide-load-msg"></div>
+  </div>
+
+
+  <!-- Settings Form -->
+  <div id="settings-sideNav" class="pop-up">
+
+    <div id="close-settings-btn" class="toolbar-button" style="float: right;" onclick="changeSettings()">
+      <i class="material-icons">close</i>
+    </div>
+
+    <div class="input-note">
+      <h3>Settings</h3>
+    </div>
+
+    <div>
+      <b style="color: #f44336;">Note: Settings are not implemented</b>
+    </div>
+
+    <div class="settings-input-label">
+      <label for="contextBefore">Context Before</label>
+    </div>
+    <div>
+      <input type="number" id="contextBefore" name="contextBefore" class="settings-input" min="0">
+    </div>
+
+    <br>
+    <div class="settings-input-label">
+      <label for="clozePrompts">Cloze Prompts</label>
+    </div>
+    <div>
+      <input type="number" id="clozePrompts" name="clozePrompts" class="settings-input" min="1">
+    </div>
+
+
+    <br>
+    <div class="settings-input-label">
+      <label for="contextAfter">Context After</label>
+    </div>
+    <div>
+      <input type="number" id="contextAfter" name="contextAfter" class="settings-input" min="0">
+    </div>
+
+    <br>
+    <a class="help-button" onclick="showHelp();">Help</a>
+
+  </div>
+  <!-- Settings Form -->
+
+
+
+  <!--Help Side Nav -->
+  <div id="viewHelpSideNav" class="sidenav-help" style="right: 0;">
+    <!-- buttons only for showing (no function) -->
+
+      <div style="width: -webkit-fill-available;">
+        <div id="page-title-id" class="toolbar-button" style="float: left;font-size: 24px;">Settings</div>
+        <div class="toolbar-button" style="float: right;" onclick="showHelp()">
+          <i class="material-icons">close</i>
+        </div>
+      </div>
+
+    <div style="margin-top: 60px;" class="label-design1"><b>Add cloze one by one</b></div>
+    <div class="help-side-nav-text">
+      <b>It will create cloze for paragraph.</b>
+      <br>
+      1. Add paragraph to Original textarea
+      <br>
+      2. Select text and click <i class="material-icons" style="color: #43a047;">flip</i> to create cloze
+      <br>
+      3. Click <i class="material-icons" style="color: #43a047;">all_inclusive</i> to generate note data
+      <br>
+      4. Click <i class="material-icons" style="color: #43a047;">add</i> to add to list internally
+      <br>
+      5. Repeat 1-4 to create more clozes
+      <br>
+      6. Click <i class="material-icons" style="color: #43a047;">get_app</i> to generate and download the Anki deck
+
+    </div>
+
+    <div class="label-design1"><b>Auto generate cloze</b></div>
+    <div class="help-side-nav-text">
+
+      <b>It will create cloze for list with one item per line.</b>
+      <br>
+      1. Add list with one item per line in Original textarea
+      <br>
+      2. Click <i class="material-icons" style="color: #43a047;">all_inclusive</i> to generate note data
+      <br>
+      3. Click <i class="material-icons" style="color: #43a047;">add</i> to add to list internally
+      <br>
+      4. Repeat 1-3 to create more clozes
+      <br>
+      5. Click <i class="material-icons" style="color: #43a047;">get_app</i> to generate and download the Anki deck
+
+    </div>
+
+    <hr class="thin">
+
+    <table class="help-sidebar">
+      <tbody>
+        <tr>
+          <th>
+            Button
+          </th>
+          <th>
+            Actions
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #43a047;">flip</i></div>
+          </td>
+          <td>
+            Create single cloze
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #009688;">all_inclusive</i></div>
+          </td>
+          <td>
+            <b>Generate cloze</b>: If <i>[[oc_:text]]</i> present then it convert to cloze then generate. Other wise it
+            will auto generate cloze for list
+            with one item per line.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #f44336;">delete_forever</i></div>
+          </td>
+          <td>
+            Clear generated notes data
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #5c6bc0;">settings</i></div>
+          </td>
+          <td>
+            Change context for before, after and prompt (Currently not implemented)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #607d8b;">add</i></div>
+          </td>
+          <td>
+            Add notes data to list internally
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button"><i class="material-icons" style="color: #1e88e5;">get_app</i></div>
+          </td>
+          <td>
+            Generate and download ready to import Anki decks
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="text-align: left; padding: 20px;">
+      <div>
+        <div><b>View Source</b></div>
+        <a target="_blank" href="https://github.com/infinyte7/ocloze"><b>ocloze : cloze overlapper in browser</b></a>
+      </div>
+
+      <br><br>
+      <div><b>Report bugs and issues</b></div>
+      <div>
+        <a target="_blank" href="https://github.com/infinyte7/ocloze/issues"><b>Issues</b></a>
+      </div>
+
+      <br><br>
+      <div><b>License</b></div>
+      <div>
+        GPL 3.0 Later
+        <br>
+        Copyright (c) 2020 Mani
+      </div>
+      <br>
+      <div>
+        <div><b>Other third party license</b></div>
+        <a target="_blank" href="https://github.com/infinyte7/ocloze/blob/master/License.md">License</a>
+      </div>
+
+      <br><br>
+    </div>
+  </div>
+  <!--Help Side Nav -->
 
   <!-- pyodide script anki deck export -->
   <script src="js/deck-export.js"></script>

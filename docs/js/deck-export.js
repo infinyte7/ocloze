@@ -1,3 +1,9 @@
+/**
+*    Note:  when \ (back slash) then use \\ (double back) other wise it will not work.
+*    eg:-   hint.innerHTML.replace(/\[\[oc(\d+)::(.*?)(::(.*?))?\]\]/mg,
+*           hint.innerHTML.replace(/\\[\\[oc(\\d+)::(.*?)(::(.*?))?\\]\\]/mg,
+**/
+
 pythonCode = `
 import random
 import csv
@@ -24,8 +30,7 @@ def exportDeck(data_filename, deck_filename):
       import genanki
       from genanki import Model
       # front side
-      front = """
-<!--template
+      front = """<!--template
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE START ########
 version: 1.0.0
 -->
@@ -104,11 +109,9 @@ if ( document.readyState === 'complete' ) {
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE END ######## */
 template-->
 
-<!-- Add your customizations here: -->
-"""
+<!-- Add your customizations here: -->"""
 
-      style = """
-/*template
+      style = """/*template
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE START ########
 version: 1.0.0
 */
@@ -207,12 +210,11 @@ font-size: 0.8em;
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE END ########
 template*/
 
-/* Add your customizations here: */      
-"""
+/* Add your customizations here: */"""
+
 
       # back side
-      back = """
-<!--template
+      back = """<!--template
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE START ########
 version: 1.0.0
 -->
@@ -275,7 +277,7 @@ the add-on updates its template.
 // Remove cloze syntax from revealed hint
 var hint = document.getElementById("original");
 if (hint) {
-    var html = hint.innerHTML.replace(/\[\[oc(\d+)::(.*?)(::(.*?))?\]\]/mg,
+    var html = hint.innerHTML.replace(/\\[\\[oc(\\d+)::(.*?)(::(.*?))?\\]\\]/mg,
                                     "<span class='cloze'>$2</span>");
     hint.innerHTML = html
 };
@@ -315,8 +317,8 @@ var olToggle = function() {
 ######## CLOZE OVERLAPPER DEFAULT TEMPLATE END ######## */
 template-->
 
-<!-- Add your customizations here: -->      
-"""
+<!-- Add your customizations here: -->"""
+
       t_fields = [{"name": "Original"},{"name": "Title"}, {"name": "Remarks"}, {"name": "Sources"}, {"name": "Settings"}]
       
       for i in range(1,21):
