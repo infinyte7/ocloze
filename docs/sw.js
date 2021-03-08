@@ -1,8 +1,7 @@
-const cacheName = 'image-occlusion-v1';
+const cacheName = 'ocloze-v1';
 const staticAssets = [
   './',
   './index.html',
-  './common.html',
   
   './css/fonts/Material-Icons.woff2',
 
