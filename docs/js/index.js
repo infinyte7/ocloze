@@ -311,12 +311,7 @@ console.log = function (message) {
     console.olog(message);
     document.getElementById("pyodide-load-msg").innerHTML += '<p>' + message + '</p>';
 };
-console.debug = console.info = console.log
-
-console.error = function (message) {
-    console.error(message);
-    document.getElementById("pyodide-load-msg").innerHTML += '<p style="color:red;">' + message + '</p>';
-};
+console.error = console.debug = console.info = console.log
 
 function closeConsole() {
     document.getElementById("pyodide-load-status").style.display = "none";
