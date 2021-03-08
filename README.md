@@ -15,7 +15,7 @@ https://infinyte7.github.io/ocloze/index.html
 - Generate ready to import Anki Decks
 
 # Demo
-![](images/demo_ocloze.gif)
+<img src="images/demo_ocloze.gif" width="400"></img>
 
 # Todo
 - Implement settings for context before, after and prompts
