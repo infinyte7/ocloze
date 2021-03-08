@@ -97,7 +97,7 @@ function convertCloze() {
     var regText = [];
 
     while ((result = reg.exec(noteData)) !== null) {
-        console.log(result[0]);
+        //console.log(result[0]);
         regText.push(result[0]);
     }
 
@@ -133,7 +133,7 @@ function convertCloze() {
         }
 
         document.getElementById("noteText" + (i + 1)).value = noteData1;
-        console.log("i::" + noteData1);
+        //console.log("i::" + noteData1);
 
     }
 
@@ -177,7 +177,7 @@ function autoGenerate() {
                 text += "<div>...</div>";
             }
         }
-        console.log(text);
+        //console.log(text);
         document.getElementById("noteText" + (i + 1)).value = text;
     }
     document.getElementById("fullText").value = fullText;
@@ -196,7 +196,7 @@ var createClickCount = 0;
 var origNoteData = "";
 function createCloze() {
     var text = window.getSelection().toString();
-    console.log("::" + text);
+    //console.log("::" + text);
 
     var note = document.getElementById("noteOriginal");
     var noteData = document.getElementById("noteOriginal").value;
@@ -225,7 +225,7 @@ function addClozeToList() {
 
     textToExport = textToExport.trim();
     textToExport += "\n";
-    console.log(textToExport);
+    //console.log(textToExport);
 
     textFileName = "output-all-notes.txt";
 
