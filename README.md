@@ -3,6 +3,8 @@ cloze overlapper in browser for Anki, AnkiMobile and AnkiDroid
 
 The project made using HTML/CSS/JS, pyodide and genanki python module.
 
+### Still in development
+
 # Quick Start
 
 Visit following in browser
