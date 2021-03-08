@@ -23,7 +23,8 @@ if new_title != None:
 
 anki_model_name = "ocloze-infi"
 
-model_id = random.randrange(1 << 30, 1 << 31)
+# model_id = random.randrange(1 << 30, 1 << 31)
+model_id = 1918965134
 
 def exportDeck(data_filename, deck_filename):
    try:
