@@ -94,6 +94,7 @@ import micropip
 # micropip.install("http://localhost:8000/py-whl/genanki-0.8.0-py3-none-any.whl")
 
 # from GitHub using CDN
+micropip.install("https://cdn.jsdelivr.net/gh/infinyte7/ocloze/docs/py-whl/soupsieve-2.2-py3-none-any.whl")
 micropip.install("https://cdn.jsdelivr.net/gh/infinyte7/ocloze/docs/py-whl/beautifulsoup4-4.9.3-py3-none-any.whl")
 micropip.install("https://cdn.jsdelivr.net/gh/infinyte7/ocloze/docs/py-whl/frozendict-1.2-py3-none-any.whl")
 micropip.install("https://cdn.jsdelivr.net/gh/infinyte7/ocloze/docs/py-whl/pystache-0.5.4-py3-none-any.whl")

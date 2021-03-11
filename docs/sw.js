@@ -20,6 +20,7 @@ const staticAssets = [
   './py-whl/pystache-0.5.4-py3-none-any.whl',
   './py-whl/PyYAML-5.3.1-py3-none-any.whl',
   './py-whl/beautifulsoup4-4.9.3-py3-none-any.whl',
+  './py-whl/soupsieve-2.2-py3-none-any.whl',
 
   './pyodide/dev/full/packages.json',
 

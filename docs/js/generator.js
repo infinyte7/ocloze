@@ -137,7 +137,7 @@ class ClozeOverlapper(object):
         gen = ClozeGenerator(setopts, maxfields)
         fields, full, total = gen.generate(items, formstr, keys)
 
-        print(fields, full, total)
+        #print(fields, full, total)
 
     def getClozeItems(self, matches):
         """Returns a list of items that were clozed by the user"""
@@ -326,8 +326,6 @@ data3 = """
 </ul>
 """
 cloze = ClozeOverlapper(data1)
-
-print(cloze.add(data1))
-print(cloze.add(data2))
-print(cloze.add(data3))
+data = cloze.add(data1)
+data
 `
