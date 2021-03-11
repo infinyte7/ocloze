@@ -1,3 +1,8 @@
+## cloze-overlapper
+AGPL-3.0 License
+<br>Copyright (c) glutanimate
+<br>https://github.com/glutanimate/cloze-overlapper
+
 ## Deck Template
 CC BY-SA 4.0
 <br>Copyright (c) glutanimate
@@ -13,6 +18,6 @@ The MIT License
 <br>https://github.com/kerrickstaley/genanki
 
 ## ocloze : cloze overlapper in browser
-GPL 3.0
+AGPL-3.0 License
 <br>Copyright (c) 2020 Mani
 <br>https://github.com/infinyte7/ocloze

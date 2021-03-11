@@ -18,7 +18,8 @@ const staticAssets = [
   './py-whl/frozendict-1.2-py3-none-any.whl',
   './py-whl/genanki-0.8.0-py3-none-any.whl',
   './py-whl/pystache-0.5.4-py3-none-any.whl',
-  './py-whl/PyYAML-5.3.1-cp38-cp38-win_amd64.whl',
+  './py-whl/PyYAML-5.3.1-py3-none-any.whl',
+  './py-whl/beautifulsoup4-4.9.3-py3-none-any.whl',
 
   './pyodide/dev/full/packages.json',
 
