@@ -21,8 +21,11 @@ https://infinyte7.github.io/ocloze/index.html
 1. Paste paragraph in ```Original``` field
 2. Select a text in paragraph
 3. Click ```Add [[``` button to create cloze for that text
-4. Repeat 1-3 to create more cloze
-5. Click download button to export deck
+4. Repeat 1-3 to add more cloze
+5. Click ```Generate``` button to generate cloze
+6. Click ```Add``` button to add generated cloze to list
+7. Repeat to create more cloze
+8. Finally, Click download button to export deck
 
 ## Auto generate cloze for list items in five steps
 1. Paste list with item per line in ```Original``` field
