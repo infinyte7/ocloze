@@ -17,7 +17,7 @@ https://infinyte7.github.io/ocloze/index.html
 - Generate ready to import Anki Decks
 
 # How to create cloze?
-## Create cloze in paragraph in five steps
+## Create cloze in paragraph
 1. Paste paragraph in ```Original``` field
 2. Select a text in paragraph
 3. Click ```Add [[``` button to create cloze for that text
@@ -27,7 +27,7 @@ https://infinyte7.github.io/ocloze/index.html
 7. Repeat to create more cloze
 8. Finally, Click download button to export deck
 
-## Auto generate cloze for list items in five steps
+## Auto generate cloze for list items
 1. Paste list with item per line in ```Original``` field
 2. Click ```Generate``` button to generate cloze
 3. Click ```Add``` button to add generated cloze to list
