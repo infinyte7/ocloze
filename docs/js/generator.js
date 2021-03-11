@@ -115,10 +115,9 @@ class ClozeOverlapper(object):
 
     creg = r"(?s)\\[\\[oc(\\d+)::((.*?)(::(.*?))?)?\\]\\]"
 
-    def __init__(self, note, markup=False, silent=False, parent=None):
+    def __init__(self, markup=False, silent=False):
         self.markup = markup
         self.silent = silent
-        self.parent = parent
 
     def add(self, original):
         """Add overlapping clozes to note"""
@@ -132,12 +131,12 @@ class ClozeOverlapper(object):
             formstr = None
             items, keys = self.getLineItems(original)
 
-        setopts = parseNoteSettings("1,1,0 | n,n,n,n")
+        setopts = parseNoteSettings(jsSetopts)
 
         gen = ClozeGenerator(setopts, maxfields)
         fields, full, total = gen.generate(items, formstr, keys)
 
-        #print(fields, full, total)
+        return fields, full, total
 
     def getClozeItems(self, matches):
         """Returns a list of items that were clozed by the user"""
@@ -199,7 +198,7 @@ class ClozeGenerator(object):
     def generate(self, items, original=None, keys=None):
         """Returns an array of lists with overlapping cloze deletions"""
         length = len(items)
-        print(self.before, self.prompt, self.after)
+        # print(self.before, self.prompt, self.after)
         if self.prompt > length:
             return 0, None, None
         if self.options[2]:
@@ -296,36 +295,19 @@ class ClozeGenerator(object):
             return self.total
         return idx+self.after
 
+# setOpts = [[1,1,1], ["y","y","y","y"]]
 
+if js.jsSetOpts == None:
+    jsSetopts = "1,1,0 | n,n,n,n"
+else:
+    jsSetopts = js.jsSetOpts
 
-setOpts = [[1,1,1], ["y","y","y","y"]]
 maxfields = 20
-data1 = """
-Physical Layer
-Data Link Layer
-Network Layer
-Transport Layer
-Session Layer
-Presentation Layer
-Application Layer
-"""
-data2 = """
-In the [[oc1::seven-layer]] OSI model of [[oc2::computer networking]], the network layer is layer 3. The network layer is responsible for [[oc3::packet forwarding]] including routing through [[oc4::intermediate routers]].
-"""
 
-data3 = """
-<ul>
-  <li>Coffee</li>
-  <li>Tea
-    <ul>
-      <li>Black tea</li>
-      <li>Green tea</li>
-    </ul>
-  </li>
-  <li>Milk</li>
-</ul>
-"""
-cloze = ClozeOverlapper(data1)
-data = cloze.add(data1)
+cloze = ClozeOverlapper()
+
+if js.originalNoteData != None:
+    data = cloze.add(js.originalNoteData)
+# fields, full, total
 data
 `

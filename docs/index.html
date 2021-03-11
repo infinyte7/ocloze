@@ -115,7 +115,7 @@ Author: Infinyte7 (Mani)
   <nav class="nav">
     <a href="#" class="nav__link" onclick="createCloze();">
       <i class="material-icons nav__icon" style="color: #009688;">flip</i>
-      <span class="nav__text">Add</span>
+      <span class="nav__text">Add [[</span>
     </a>
     <a href="#" class="nav__link" onclick="generateCloze();">
       <i class="material-icons nav__icon" style="color: #009688;">all_inclusive</i>
@@ -202,16 +202,8 @@ Author: Infinyte7 (Mani)
   <!-- Settings Form -->
   <div id="settings-sideNav" class="pop-up">
 
-    <div id="close-settings-btn" class="toolbar-button" style="float: right;" onclick="changeSettings()">
-      <i class="material-icons">close</i>
-    </div>
-
     <div class="input-note">
       <h3>Settings</h3>
-    </div>
-
-    <div>
-      <b style="color: #f44336;">Note: Settings are not implemented</b>
     </div>
 
     <div class="settings-input-label">
@@ -239,7 +231,29 @@ Author: Infinyte7 (Mani)
     </div>
 
     <br>
-    <a class="help-button" onclick="showHelp();">Help</a>
+    <div class="option-checkbox">
+      <input type="checkbox" id="opt_no_cues_first" name="opt_no_cues_first" value="n">
+      <label for="opt_no_cues_first">No cues for first item</label>
+    </div>
+    <div class="option-checkbox">
+      <input type="checkbox" id="opt_no_cues_last" name="opt_no_cues_last" value="n">
+      <label for="opt_no_cues_last">No cues for last item</label>
+    </div>
+    <div class="option-checkbox">
+      <input type="checkbox" id="opt_gradual" name="opt_gradual" value="n">
+      <label for="opt_gradual">Gradual build up/-down</label>
+    </div>
+    <div class="option-checkbox">
+      <input type="checkbox" id="opt_dont_gen" name="opt_dont_gen" value="n">
+      <label for="opt_dont_gen">Don't generate full cloze</label>
+    </div>
+    <br>
+    <div>
+    <div class="settings-button" onclick="changeSettings();">OK</div>
+    <div class="settings-button" style="background-color: #ed7989;" onclick="hideHelp();">Close</div>
+    <div class="settings-button" style="background-color: #66a6e8;" onclick="showHelp();">Help</div>
+    <div class="settings-button" style="background-color: #6b6b6b;" onclick="viewLog();">Log</div>
+    </div>
 
   </div>
   <!-- Settings Form -->

@@ -564,13 +564,19 @@ tr:nth-child(odd) {
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
 }
 
-.help-button {
-  float: right;
-  padding: 8px;
-  margin: 8px;
+.settings-button {
+  padding: 4px;
+  margin: 2px;
   background: #4CA;
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 8px;
   font-family: monospace;
+  display: inline-block;
+  width: 42px;
+}
+
+.option-checkbox {
+  margin: 2px 16px 6px;
+  text-align: left;
 }

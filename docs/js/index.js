@@ -36,13 +36,19 @@ async function registerSW() {
     }
 }
 
-
+var jsSetOpts = "";
 window.onload = function () {
 
     document.getElementById("contextBefore").value = "1";
     document.getElementById("clozePrompts").value = "1";
     document.getElementById("contextAfter").value = "0";
+    document.getElementById("opt_no_cues_first").checked = false;
+    document.getElementById("opt_no_cues_last").checked = false;
+    document.getElementById("opt_gradual").checked = false;
+    document.getElementById("opt_dont_gen").checked = false;
 
+    jsSetOpts = "1,1,0 | n,n,n,n";
+    document.getElementById("noteSettings").value = jsSetOpts;
 }
 
 
@@ -58,140 +64,28 @@ function showSnackbar(msg) {
 }
 
 
+var originalNoteData = "";
+var genClozeData = "";
 function generateCloze() {
     var note = document.getElementById("noteOriginal");
-    data = note.value;
-    if (data.trim() != "") {
-        if (data.includes("[[oc")) {
-            convertCloze();
+    originalNoteData = note.value;
+
+    if (originalNoteData.trim() == "") {
+        showSnackbar("Original note empty");
+    } else {
+        genClozeData = pyodide.runPython(generatorPythonCode)
+        //console.log(genClozeData);
+
+        if (originalNoteData.includes("[[oc")) {
+            clozeTypeOne(genClozeData);
         } else {
-            autoGenerate();
+            clozeTypeTwo(genClozeData);
         }
+
     }
 }
 
-// convert [[oc_::..]] to {{c_::..}}, where _ is 1,2,3...
-function convertCloze() {
-    var note = document.getElementById("noteOriginal");
-    noteData = note.value;
-
-    // var n = 1;
-    // var noteData1 = noteData.replace(/\[\[oc.?::/g, function (t) { return "{{c" + n++ + "::" });
-    // noteData1 = noteData1.replaceAll("]]", "}}");
-    // console.log(noteData1);
-
-    var cBef = document.getElementById("contextBefore").value;
-    var cProm = document.getElementById("clozePrompts").value;
-    var cAft = document.getElementById("contextAfter").value;
-
-    // "1,1,0 | n,n,n,n"
-    document.getElementById("noteSettings").innerHTML = cBef + "," + cProm + "," + cAft + " | n,n,n,n";
-
-    // insert one by one noteData1 to text_ where _ 1,2,3...
-    var len = noteData.match(/\[\[oc.?::/g).length;
-
-    const reg = /\[\[oc(\d+)::((.*?)(::(.*?))?)?\]\]/g;
-    var result;
-    var i = 1;
-
-    var regText = [];
-
-    while ((result = reg.exec(noteData)) !== null) {
-        //console.log(result[0]);
-        regText.push(result[0]);
-    }
-
-    var len = regText.length;
-
-    for (i = 0; i < len; i++) {
-
-        var noteData1 = noteData;
-
-        if (i > 0) {
-            res = regText[i - 1];
-            res = res.replace(/\[\[oc.?::/g, "");
-            res = res.replace("]]", "");
-
-            noteData1 = noteData1.replace(regText[i - 1], res);
-
-
-            res = regText[i];
-            res = res.replace(/\[\[oc.?::/g, "{{c" + (i + 1) + "::");
-            res = res.replace("]]", "}}");
-
-            noteData1 = noteData1.replace(regText[i], res);
-        } else {
-            res = regText[i];
-            res = res.replace(/\[\[oc.?::/g, "{{c" + (i + 1) + "::");
-            res = res.replace("]]", "}}");
-
-            noteData1 = noteData1.replace(regText[i], res);
-        }
-
-        for (j = 0; j < len; j++) {
-            noteData1 = noteData1.replace(regText[j], "...");
-        }
-
-        document.getElementById("noteText" + (i + 1)).value = noteData1;
-        //console.log("i::" + noteData1);
-
-    }
-
-
-    // full text at bottom
-    noteData = document.getElementById("noteOriginal").value;
-    var noteData3 = noteData.replace(/\[\[oc.?::/g, '{{c21::');
-    noteData3 = noteData3.replaceAll("]]", "}}")
-    document.getElementById("fullText").value = noteData3;
-}
-
-
-// for list one per line
-function autoGenerate() {
-    var note = document.getElementById("noteOriginal");
-    data = note.value;
-    data = data.split("\n");
-
-    //{{c1::text...}}
-    // 1,1,0 | n,y,y,y
-    var cBef = document.getElementById("contextBefore").value;
-    var cProm = document.getElementById("clozePrompts").value;
-    var cAft = document.getElementById("contextAfter").value;
-
-    // "1,1,0 | n,n,n,n"
-    document.getElementById("noteSettings").innerHTML = cBef + "," + cProm + "," + cAft + " | n,n,n,n";
-
-
-    var fullText = "";
-    var len = data.length;
-    for (i = 0; i < len; i++) {
-        var text = "";
-        fullText += "<div>{{c21::" + data[i] + "}}</div>";
-        for (j = 0; j < len; j++) {
-            if (i == j) {
-                if (j > 0) {
-                    text += "<div>" + data[j - 1] + "</div>";
-                }
-                text += "<div>{{c" + (j + 1) + "::" + data[j] + "}}</div>";
-            } else {
-                text += "<div>...</div>";
-            }
-        }
-        //console.log(text);
-        document.getElementById("noteText" + (i + 1)).value = text;
-    }
-    document.getElementById("fullText").value = fullText;
-
-    // replace and wrap original text with <div>
-    var orig = document.getElementById("noteOriginal").value.trim().split("\n");
-    var o = "";
-    for (i = 0; i < orig.length; i++) {
-        o += "<div>" + orig[i] + "</div>";
-    }
-    document.getElementById("noteOriginal").value = o;
-}
-
-// add single [[oc_::]] with _ as 1,2,3...
+// add [[oc_::..]] to {{c_::..}}, where _ is 1,2,3...
 var createClickCount = 0;
 var origNoteData = "";
 function createCloze() {
@@ -213,6 +107,31 @@ function createCloze() {
     }
 }
 
+function clozeTypeOne(genClozeData) {
+    for (i=0; i<20; i++) {
+        if (genClozeData[0][i] != "") {
+            document.getElementById("noteText" + (i+1)).value = genClozeData[0][i];
+        }
+    }
+
+    document.getElementById("fullText").value = genClozeData[1];
+    console.log("Cloze Generated");
+}
+
+
+// for list one per line
+function clozeTypeTwo(genClozeData) {    
+    for (i=0; i<20; i++) {
+        if (genClozeData[0][i] != "") {
+            document.getElementById("noteText" + (i+1)).value = "<div>" + genClozeData[0][i].join("</div><div>") + "</div>";
+        }
+    }
+
+    document.getElementById("fullText").value = genClozeData[1].join("\n");
+    console.log("Cloze Generated");
+}
+
+
 // add cloze to pyodide output text file for deck export
 var textToExport = "";
 var textFileName = "";
@@ -220,7 +139,7 @@ function addClozeToList() {
     var container = document.getElementById("add-note");
 
     for (i = 0; i < container.childElementCount; i++) {
-        textToExport += container.children[i].children[1].value.trim() + "\t";
+        textToExport += container.children[i].children[1].value.trim().replaceAll("\n", "<br>") + "\t";
     }
 
     textToExport = textToExport.trim();
@@ -230,7 +149,7 @@ function addClozeToList() {
     textFileName = "output-all-notes.txt";
 
     var checkText = "";
-    for (i = 5; i < container.childElementCount; i++) {
+    for (i = 5; i < container.childElementCount-1; i++) {
         checkText += container.children[i].children[1].value.trim();
     }
 
@@ -248,7 +167,8 @@ function addClozeToList() {
         textToExport = "";
 
     } else {
-        showSnackbar("Note is empty");
+        showSnackbar("Note is empty or not generated");
+        textToExport = "";
     }
 }
 
@@ -262,12 +182,17 @@ function clearNote() {
     textToExport = "";
 }
 
+function hideHelp() {
+    document.getElementById("settings-sideNav").style.height = "0%";
+    document.getElementById("settings-sideNav").style.display = "none";    
+}
+
 function changeSettings() {
-    if (document.getElementById("settings-sideNav").style.height == "65%") {
+    if (document.getElementById("settings-sideNav").style.height == "80%") {
         document.getElementById("settings-sideNav").style.height = "0%";
         document.getElementById("settings-sideNav").style.display = "none";
     } else {
-        document.getElementById("settings-sideNav").style.height = "65%";
+        document.getElementById("settings-sideNav").style.height = "80%";
         document.getElementById("settings-sideNav").style.display = "inline-block";
     }
 
@@ -275,8 +200,43 @@ function changeSettings() {
     var cProm = document.getElementById("clozePrompts").value;
     var cAft = document.getElementById("contextAfter").value;
 
+    var cueFirst = "n";
+    var cueLast = "n";
+    var gradBuild = "n";
+    var dontGenFullCloze = "n";
+
+    // No cues for first item
+    if (document.getElementById("opt_no_cues_first").checked) {
+        cueFirst = "y";
+    } else {
+        cueFirst = "n";
+    }
+
+    // No cues for last item
+    if (document.getElementById("opt_no_cues_last").checked) {
+        cueLast = "y";
+    } else {
+        cueLast = "n";
+    }
+
+    // Gradual build up/-down
+    if (document.getElementById("opt_gradual").checked) {
+        gradBuild = "y";
+    } else {
+        gradBuild = "n";
+    }
+
+    // Don't generate full cloze
+    if (document.getElementById("opt_dont_gen").checked) {
+        dontGenFullCloze = "y";
+    } else {
+        dontGenFullCloze = "n";
+    }
+
+    jsSetOpts = cBef + "," + cProm + "," + cAft + " | " + cueFirst + "," + cueLast + "," + gradBuild + "," + dontGenFullCloze;
+
     // "1,1,0 | n,n,n,n"
-    document.getElementById("noteSettings").innerHTML = cBef + "," + cProm + "," + cAft + " | n,n,n,n";
+    document.getElementById("noteSettings").value = jsSetOpts;
 }
 
 // export and download deck 
@@ -299,6 +259,14 @@ function showHelp() {
         document.getElementById("viewHelpSideNav").style.height = "100%"
     }
 }
+
+
+function viewLog() {
+    document.getElementById("pyodide-load-status").style.display = "table";
+    document.getElementById("settings-sideNav").style.height = "0%";
+    document.getElementById("settings-sideNav").style.display = "none";
+}
+
 
 function closeConsole() {
     document.getElementById("pyodide-load-status").style.display = "none";

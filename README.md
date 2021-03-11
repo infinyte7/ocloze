@@ -3,7 +3,7 @@ cloze overlapper in browser for Anki, AnkiMobile and AnkiDroid
 
 The project made using HTML/CSS/JS, pyodide and genanki python module.
 
-### Still in development
+It is web app for original [cloze overlapper addon](https://github.com/glutanimate/cloze-overlapper).
 
 # Quick Start
 
@@ -16,11 +16,26 @@ https://infinyte7.github.io/ocloze/index.html
 - Auto generate cloze for list items
 - Generate ready to import Anki Decks
 
-# Demo
-<img src="images/demo_ocloze.gif" width="500"></img>
+# How to create cloze?
+## Create cloze in paragraph in five steps
+1. Paste paragraph in ```Original``` field
+2. Select a text in paragraph
+3. Click ```Add [[``` button to create cloze for that text
+4. Repeat 1-3 to create more cloze
+5. Click download button to export deck
 
-# Todo
-- Implement settings for context before, after and prompts
+## Auto generate cloze for list items in five steps
+1. Paste list with item per line in ```Original``` field
+2. Click ```Generate``` button to generate cloze
+3. Click ```Add``` button to add generated cloze to list
+4. Repeat 1-3 to create more cloze
+5. Click download button to export deck
+
+# Demo
+![](images/demo_ocloze_2.gif)
+
+# Available settings
+![](images/settings.png)
 
 # License
 View [License.md](License.md)
