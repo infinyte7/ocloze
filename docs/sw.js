@@ -6,13 +6,14 @@ const staticAssets = [
   './css/fonts/Material-Icons.woff2',
 
   './css/index.css',
-  './css/svg.select.min.css',
 
   './sw.js',
   './manifest.json',
 
   './js/deck-export.js',
   './js/index.js',
+  '.js/template.js',
+  '.js/generator.js',
 
   './py-whl/cached_property-1.5.2-py2.py3-none-any.whl',
   './py-whl/frozendict-1.2-py3-none-any.whl',
