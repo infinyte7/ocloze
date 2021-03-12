@@ -15,6 +15,7 @@ https://infinyte7.github.io/ocloze/index.html
 - Create cloze with text selection
 - Auto generate cloze for list items
 - Generate ready to import Anki Decks
+- Settings for context before, context after and cloze prompts
 
 # How to create cloze?
 ## Create cloze in paragraph
