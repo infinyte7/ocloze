@@ -496,7 +496,7 @@ tr:nth-child(odd) {
 }
 .settings-input-label {
   font-size: 20px;
-  margin: 16px 16px 6px;
+  margin: 8px 14px 4px;
   text-align: left;
   color: #444444;
 }
