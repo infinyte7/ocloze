@@ -1,7 +1,8 @@
 ## cloze-overlapper
-AGPL-3.0 License
+[AGPL-3.0 License](https://raw.githubusercontent.com/glutanimate/cloze-overlapper/master/LICENSE)
 <br>Copyright (c) glutanimate
 <br>https://github.com/glutanimate/cloze-overlapper
+<br>[Click here to support Glutanimate's work](https://glutanimate.com/support-my-work/)
 
 ## Deck Template
 CC BY-SA 4.0
